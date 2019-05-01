@@ -1,0 +1,208 @@
+From 13ace8f23f085d9ed5b2e161496b35b58df1fe48 Mon Sep 17 00:00:00 2001
+From: Scott Gorlin <scott.gorlin@libertymutual.com>
+Date: Thu, 21 Feb 2019 00:11:47 -0500
+Subject: [PATCH] fix: disable extraneous travis tests for course
+
+---
+ .travis.yml | 168 ++++++++++++++++++++++++++--------------------------
+ README.rst  |   4 +-
+ 2 files changed, 86 insertions(+), 86 deletions(-)
+
+diff --git a/.travis.yml b/.travis.yml
+index ec6fc10..77804c8 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -9,91 +9,91 @@ env:
+   global:
+     LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
+   matrix:
+-    - ENV=matrix-nose-argparse-py3doc-flake8
+-    - ENV=matrix-nose-click-py3doc-flake8
+-    - ENV=matrix-nose-nocli-py3doc-flake8
+-    - ENV=matrix-nose-nocli-rtd-flake8
+-    - ENV=matrix-nose-plain-py3doc-flake8
+-    - ENV=matrix-pytest-argparse-py3doc-flake8
+-    - ENV=matrix-pytest-cext-nocli-py3doc-flake8
+-    - ENV=matrix-pytest-cext-nocli-rtd-flake8
+-    - ENV=matrix-pytest-cext-optional-nocli-py3doc-flake8
+-    - ENV=matrix-pytest-cext-optional-nocli-rtd-flake8
+-    - ENV=matrix-pytest-cffi-nocli-py3doc-flake8
+-    - ENV=matrix-pytest-cffi-nocli-rtd-flake8
+-    - ENV=matrix-pytest-click-py3doc-flake8
+-    - ENV=matrix-pytest-cython-nocli-py3doc-flake8
+-    - ENV=matrix-pytest-cython-nocli-rtd-flake8
+-    - ENV=matrix-pytest-nocli-py3doc-flake8
+-    - ENV=matrix-pytest-nocli-rtd-flake8
+-    - ENV=matrix-pytest-plain-py3doc-flake8
+-    - ENV=matrix-separatecover-nose-argparse-py3doc-flake8
+-    - ENV=matrix-separatecover-nose-click-py3doc-flake8
+-    - ENV=matrix-separatecover-nose-nocli-py3doc-flake8
+-    - ENV=matrix-separatecover-nose-nocli-rtd-flake8
+-    - ENV=matrix-separatecover-nose-plain-py3doc-flake8
+-    - ENV=matrix-separatecover-pytest-argparse-py3doc-flake8
+-    - ENV=matrix-separatecover-pytest-cext-nocli-py3doc-flake8
+-    - ENV=matrix-separatecover-pytest-cext-nocli-rtd-flake8
+-    - ENV=matrix-separatecover-pytest-cext-optional-nocli-py3doc-flake8
+-    - ENV=matrix-separatecover-pytest-cext-optional-nocli-rtd-flake8
+-    - ENV=matrix-separatecover-pytest-cffi-nocli-py3doc-flake8
+-    - ENV=matrix-separatecover-pytest-cffi-nocli-rtd-flake8
+-    - ENV=matrix-separatecover-pytest-click-py3doc-flake8
+-    - ENV=matrix-separatecover-pytest-cython-nocli-py3doc-flake8
+-    - ENV=matrix-separatecover-pytest-cython-nocli-rtd-flake8
+-    - ENV=matrix-separatecover-pytest-nocli-py3doc-flake8
+-    - ENV=matrix-separatecover-pytest-nocli-rtd-flake8
+-    - ENV=matrix-separatecover-pytest-plain-py3doc-flake8
+-    - ENV=plain-nose-argparse-py3doc-flake8
+-    - ENV=plain-nose-click-py3doc-flake8
+-    - ENV=plain-nose-nocli-py3doc-flake8
+-    - ENV=plain-nose-nocli-rtd-flake8
+-    - ENV=plain-nose-plain-py3doc-flake8
++    # - ENV=matrix-nose-argparse-py3doc-flake8
++    # - ENV=matrix-nose-click-py3doc-flake8
++    # - ENV=matrix-nose-nocli-py3doc-flake8
++    # - ENV=matrix-nose-nocli-rtd-flake8
++    # - ENV=matrix-nose-plain-py3doc-flake8
++    # - ENV=matrix-pytest-argparse-py3doc-flake8
++    # - ENV=matrix-pytest-cext-nocli-py3doc-flake8
++    # - ENV=matrix-pytest-cext-nocli-rtd-flake8
++    # - ENV=matrix-pytest-cext-optional-nocli-py3doc-flake8
++    # - ENV=matrix-pytest-cext-optional-nocli-rtd-flake8
++    # - ENV=matrix-pytest-cffi-nocli-py3doc-flake8
++    # - ENV=matrix-pytest-cffi-nocli-rtd-flake8
++    # - ENV=matrix-pytest-click-py3doc-flake8
++    # - ENV=matrix-pytest-cython-nocli-py3doc-flake8
++    # - ENV=matrix-pytest-cython-nocli-rtd-flake8
++    # - ENV=matrix-pytest-nocli-py3doc-flake8
++    # - ENV=matrix-pytest-nocli-rtd-flake8
++    # - ENV=matrix-pytest-plain-py3doc-flake8
++    # - ENV=matrix-separatecover-nose-argparse-py3doc-flake8
++    # - ENV=matrix-separatecover-nose-click-py3doc-flake8
++    # - ENV=matrix-separatecover-nose-nocli-py3doc-flake8
++    # - ENV=matrix-separatecover-nose-nocli-rtd-flake8
++    # - ENV=matrix-separatecover-nose-plain-py3doc-flake8
++    # - ENV=matrix-separatecover-pytest-argparse-py3doc-flake8
++    # - ENV=matrix-separatecover-pytest-cext-nocli-py3doc-flake8
++    # - ENV=matrix-separatecover-pytest-cext-nocli-rtd-flake8
++    # - ENV=matrix-separatecover-pytest-cext-optional-nocli-py3doc-flake8
++    # - ENV=matrix-separatecover-pytest-cext-optional-nocli-rtd-flake8
++    # - ENV=matrix-separatecover-pytest-cffi-nocli-py3doc-flake8
++    # - ENV=matrix-separatecover-pytest-cffi-nocli-rtd-flake8
++    # - ENV=matrix-separatecover-pytest-click-py3doc-flake8
++    # - ENV=matrix-separatecover-pytest-cython-nocli-py3doc-flake8
++    # - ENV=matrix-separatecover-pytest-cython-nocli-rtd-flake8
++    # - ENV=matrix-separatecover-pytest-nocli-py3doc-flake8
++    # - ENV=matrix-separatecover-pytest-nocli-rtd-flake8
++    # - ENV=matrix-separatecover-pytest-plain-py3doc-flake8
++    # - ENV=plain-nose-argparse-py3doc-flake8
++    # - ENV=plain-nose-click-py3doc-flake8
++    # - ENV=plain-nose-nocli-py3doc-flake8
++    # - ENV=plain-nose-nocli-rtd-flake8
++    # - ENV=plain-nose-plain-py3doc-flake8
+     - ENV=plain-pytest-argparse-py3doc-flake8
+-    - ENV=plain-pytest-argparse-py3doc-pylama
+-    - ENV=plain-pytest-cext-nocli-py3doc-flake8
+-    - ENV=plain-pytest-cext-nocli-py3doc-pylama
+-    - ENV=plain-pytest-cext-nocli-rtd-flake8
+-    - ENV=plain-pytest-cext-nocli-rtd-pylama
+-    - ENV=plain-pytest-cext-optional-nocli-py3doc-flake8
+-    - ENV=plain-pytest-cext-optional-nocli-py3doc-pylama
+-    - ENV=plain-pytest-cext-optional-nocli-rtd-flake8
+-    - ENV=plain-pytest-cext-optional-nocli-rtd-pylama
+-    - ENV=plain-pytest-cffi-nocli-py3doc-flake8
+-    - ENV=plain-pytest-cffi-nocli-py3doc-pylama
+-    - ENV=plain-pytest-cffi-nocli-rtd-flake8
+-    - ENV=plain-pytest-cffi-nocli-rtd-pylama
+-    - ENV=plain-pytest-click-py3doc-flake8
+-    - ENV=plain-pytest-click-py3doc-pylama
+-    - ENV=plain-pytest-cython-nocli-py3doc-flake8
+-    - ENV=plain-pytest-cython-nocli-py3doc-pylama
+-    - ENV=plain-pytest-cython-nocli-rtd-flake8
+-    - ENV=plain-pytest-cython-nocli-rtd-pylama
+-    - ENV=plain-pytest-nocli-py3doc-flake8
+-    - ENV=plain-pytest-nocli-py3doc-pylama
+-    - ENV=plain-pytest-nocli-rtd-flake8
+-    - ENV=plain-pytest-nocli-rtd-pylama
+-    - ENV=plain-pytest-plain-py3doc-flake8
+-    - ENV=plain-pytest-plain-py3doc-pylama
+-    - ENV=plain-separatecover-nose-argparse-py3doc-flake8
+-    - ENV=plain-separatecover-nose-click-py3doc-flake8
+-    - ENV=plain-separatecover-nose-nocli-py3doc-flake8
+-    - ENV=plain-separatecover-nose-nocli-rtd-flake8
+-    - ENV=plain-separatecover-nose-plain-py3doc-flake8
+-    - ENV=plain-separatecover-pytest-argparse-py3doc-flake8
+-    - ENV=plain-separatecover-pytest-cext-nocli-py3doc-flake8
+-    - ENV=plain-separatecover-pytest-cext-nocli-rtd-flake8
+-    - ENV=plain-separatecover-pytest-cext-optional-nocli-py3doc-flake8
+-    - ENV=plain-separatecover-pytest-cext-optional-nocli-rtd-flake8
+-    - ENV=plain-separatecover-pytest-cffi-nocli-py3doc-flake8
+-    - ENV=plain-separatecover-pytest-cffi-nocli-rtd-flake8
+-    - ENV=plain-separatecover-pytest-click-py3doc-flake8
+-    - ENV=plain-separatecover-pytest-cython-nocli-py3doc-flake8
+-    - ENV=plain-separatecover-pytest-cython-nocli-rtd-flake8
+-    - ENV=plain-separatecover-pytest-nocli-py3doc-flake8
+-    - ENV=plain-separatecover-pytest-nocli-rtd-flake8
+-    - ENV=plain-separatecover-pytest-plain-py3doc-flake8
++    # - ENV=plain-pytest-argparse-py3doc-pylama
++    # - ENV=plain-pytest-cext-nocli-py3doc-flake8
++    # - ENV=plain-pytest-cext-nocli-py3doc-pylama
++    # - ENV=plain-pytest-cext-nocli-rtd-flake8
++    # - ENV=plain-pytest-cext-nocli-rtd-pylama
++    # - ENV=plain-pytest-cext-optional-nocli-py3doc-flake8
++    # - ENV=plain-pytest-cext-optional-nocli-py3doc-pylama
++    # - ENV=plain-pytest-cext-optional-nocli-rtd-flake8
++    # - ENV=plain-pytest-cext-optional-nocli-rtd-pylama
++    # - ENV=plain-pytest-cffi-nocli-py3doc-flake8
++    # - ENV=plain-pytest-cffi-nocli-py3doc-pylama
++    # - ENV=plain-pytest-cffi-nocli-rtd-flake8
++    # - ENV=plain-pytest-cffi-nocli-rtd-pylama
++    # - ENV=plain-pytest-click-py3doc-flake8
++    # - ENV=plain-pytest-click-py3doc-pylama
++    # - ENV=plain-pytest-cython-nocli-py3doc-flake8
++    # - ENV=plain-pytest-cython-nocli-py3doc-pylama
++    # - ENV=plain-pytest-cython-nocli-rtd-flake8
++    # - ENV=plain-pytest-cython-nocli-rtd-pylama
++    # - ENV=plain-pytest-nocli-py3doc-flake8
++    # - ENV=plain-pytest-nocli-py3doc-pylama
++    # - ENV=plain-pytest-nocli-rtd-flake8
++    # - ENV=plain-pytest-nocli-rtd-pylama
++    # - ENV=plain-pytest-plain-py3doc-flake8
++    # - ENV=plain-pytest-plain-py3doc-pylama
++    # - ENV=plain-separatecover-nose-argparse-py3doc-flake8
++    # - ENV=plain-separatecover-nose-click-py3doc-flake8
++    # - ENV=plain-separatecover-nose-nocli-py3doc-flake8
++    # - ENV=plain-separatecover-nose-nocli-rtd-flake8
++    # - ENV=plain-separatecover-nose-plain-py3doc-flake8
++    # - ENV=plain-separatecover-pytest-argparse-py3doc-flake8
++    # - ENV=plain-separatecover-pytest-cext-nocli-py3doc-flake8
++    # - ENV=plain-separatecover-pytest-cext-nocli-rtd-flake8
++    # - ENV=plain-separatecover-pytest-cext-optional-nocli-py3doc-flake8
++    # - ENV=plain-separatecover-pytest-cext-optional-nocli-rtd-flake8
++    # - ENV=plain-separatecover-pytest-cffi-nocli-py3doc-flake8
++    # - ENV=plain-separatecover-pytest-cffi-nocli-rtd-flake8
++    # - ENV=plain-separatecover-pytest-click-py3doc-flake8
++    # - ENV=plain-separatecover-pytest-cython-nocli-py3doc-flake8
++    # - ENV=plain-separatecover-pytest-cython-nocli-rtd-flake8
++    # - ENV=plain-separatecover-pytest-nocli-py3doc-flake8
++    # - ENV=plain-separatecover-pytest-nocli-rtd-flake8
++    # - ENV=plain-separatecover-pytest-plain-py3doc-flake8
+ before_install:
+   - python --version
+   - virtualenv --version
+diff --git a/README.rst b/README.rst
+index 21e06ae..b181d12 100644
+--- a/README.rst
++++ b/README.rst
+@@ -1,8 +1,8 @@
+ ======================
+-cookiecutter-pylibrary
++cookiecutter-csci-pset
+ ======================
+ 
+-Cookiecutter_ template for a Python python library. |travis| |appveyor| |requiresio|
++Cookiecutter_ template for a CSCI E-29 problem set application |travis| |appveyor| |requiresio|
+ 
+ .. |travis| image:: http://img.shields.io/travis/ionelmc/cookiecutter-pylibrary/master.svg?style=flat&label=Travis
+     :alt: Travis-CI Build Status
+-- 
+2.18.0
+
