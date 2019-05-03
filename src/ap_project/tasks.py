@@ -39,7 +39,6 @@ class ClinicData(luigi.Task):
 
 # output provider data files
 class ProviderFiles(luigi.Task):
-
     file = luigi.Parameter('file')
     task_complete = False
 
@@ -57,13 +56,11 @@ class ProviderFiles(luigi.Task):
             provider_data = data[data.LAST_VISIT_PROVIDER==i]
             provider_data.to_csv(self.output(name=name).path)
         self.task_complete = True
-
     def complete(self):
         return self.task_complete
 
 
 class ProviderPlots(luigi.Task):
-
     file = luigi.Parameter('file')
     task_complete = False
 
@@ -97,12 +94,13 @@ class ProviderPlots(luigi.Task):
 # output clinic plots
 class ClinicPlots(luigi.Task):
     file = luigi.Parameter('file')
+    task_complete = False
 
     def requires(self):
         return ClinicData(file=self.file)
-    def output(self):
-        return luigi.LocalTarget(join('.','data','CLINIC_RUN_CHARTS','CLINIC_RUN_CHARTS_'+
-                                      self.input().path.split('DATA_')[-1].rstrip('.csv')))
+    def output(self, date = ''):
+        out_path = join('.','data','CLINIC_RUN_CHARTS','CLINIC_RUN_CHARTS_'+ date+'.png')
+        return luigi.LocalTarget(out_path)
     def run(self):
         data = pd.read_csv(self.input().path)
         data = data.groupby(['WEEK']).mean()
@@ -115,23 +113,17 @@ class ClinicPlots(luigi.Task):
         plt.plot(data.index, data.MICROALBUMIN_WITHIN_YEAR)
         plt.subplot(224)
         plt.plot(data.index, data.BMP_CMP_WITHIN_YEAR)
-        plt.savefig(self.output().path)
+        d = self.input().path.split('DATA_')[-1].rstrip('.csv')
+        plt.savefig(self.output(date=d).path)
         plt.close()
-
+        self.task_complete = True
+    def complete(self):
+        return self.task_complete
     
 class RunReport(luigi.WrapperTask):
     file = luigi.Parameter('file')
 
     def requires(self):
-        yield ClinicPlots(file=self.file)
         yield ProviderFiles(file=self.file)
         yield ProviderPlots(file=self.file)
-
-    # def output(self):
-    #     return None
-    #
-    # def complete(self):
-    #     if exists(join('.','data','CLINIC',self.file)) \
-    #         and exists(ClinicPlots.output(date = ClinicPlots.input().path.split('DATA')[-1].rstrip('.csv'))):
-    #         return True
-    #     return False
+        yield ClinicPlots(file=self.file)
