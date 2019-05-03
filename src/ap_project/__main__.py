@@ -1,5 +1,5 @@
 """
-Entrypoint module, in case you use `python -map_project`.
+Entrypoint module, in case you use `python -m ap_project`.
 
 
 Why does this file exist, and why __main__? For more info, read:
