@@ -5,6 +5,7 @@ import shutil
 
 import luigi
 import pandas as pd
+import numpy as np
 from matplotlib import pyplot as plt
 
 # retrieve new file
@@ -73,15 +74,43 @@ class ProviderPlots(luigi.Task):
         for i in all_data.LAST_VISIT_PROVIDER.unique():
             provider_data = all_data[all_data.LAST_VISIT_PROVIDER == i]
             name = str(i).replace(', ', '_')
+            weeks = provider_data.WEEK.max()
             data = provider_data.groupby(['WEEK']).mean()
-            plt.subplot(221)
-            plt.plot(data.index, data.HBA1C_WITHIN_3_MONTHS)
-            plt.subplot(222)
-            plt.plot(data.index, data.LIPID_WITHIN_YEAR)
-            plt.subplot(223)
-            plt.plot(data.index, data.MICROALBUMIN_WITHIN_YEAR)
-            plt.subplot(224)
-            plt.plot(data.index, data.BMP_CMP_WITHIN_YEAR)
+            GOAL = 0.85
+
+            f, [[ax1, ax2], [ax3, ax4]] = plt.subplots(nrows=2, ncols=2, sharey=True, sharex=True)
+            plt.subplots_adjust(hspace=0.3)
+
+            ax1.set_ylim([.3, 1])
+            ax1.set_xticks(np.arange(1, weeks + 1, 2))
+            ax1.axhline(GOAL, linestyle='--', color='green')
+            ax1.axhline(data.HBA1C_WITHIN_3_MONTHS.mean(), linestyle='-.', color='orange')
+            ax1.set_title('HBA1C within 3 Months')
+            ax1.plot(data.index, data.HBA1C_WITHIN_3_MONTHS)
+
+            # ax2.set_ylim([.3,1])
+            ax2.axhline(GOAL, linestyle='--', color='green')
+            ax2.axhline(data.LIPID_WITHIN_YEAR.mean(), linestyle='-.', color='orange')
+            ax2.set_title('Lipids within year')
+            ax2.plot(data.index, data.LIPID_WITHIN_YEAR)
+
+            # ax3.set_ylim([.3,1])
+            ax3.axhline(GOAL, linestyle='--', color='green')
+            ax3.axhline(data.MICROALBUMIN_WITHIN_YEAR.mean(), linestyle='-.', color='orange')
+            ax3.set_title('Microalbumin within year')
+            ax3.set_xlabel('Week')
+            ax3.plot(data.index, data.MICROALBUMIN_WITHIN_YEAR)
+
+            # ax4.set_ylim([.3,1])
+            ax4.axhline(GOAL, linestyle='--', color='green')
+            ax4.axhline(data.BMP_CMP_WITHIN_YEAR.mean(), linestyle='-.', color='orange')
+            ax4.set_title('Metabolic Panel within year')
+            ax4.set_xlabel('Week')
+            ax4.plot(data.index, data.BMP_CMP_WITHIN_YEAR)
+
+            plt.suptitle('Percentage of Patients with Labs')
+
+
             if not exists(join('.', 'data', 'PROVIDER_RUN_CHARTS', name)):
                 mkdir(join('.', 'data', 'PROVIDER_RUN_CHARTS', name))
             plt.savefig(self.output(name=name).path)
@@ -102,17 +131,44 @@ class ClinicPlots(luigi.Task):
         out_path = join('.','data','CLINIC_RUN_CHARTS','CLINIC_RUN_CHARTS_'+ date+'.png')
         return luigi.LocalTarget(out_path)
     def run(self):
-        data = pd.read_csv(self.input().path)
-        data = data.groupby(['WEEK']).mean()
-        #TODO label axis, set axis, set title,
-        plt.subplot(221)
-        plt.plot(data.index, data.HBA1C_WITHIN_3_MONTHS)
-        plt.subplot(222)
-        plt.plot(data.index, data.LIPID_WITHIN_YEAR)
-        plt.subplot(223)
-        plt.plot(data.index, data.MICROALBUMIN_WITHIN_YEAR)
-        plt.subplot(224)
-        plt.plot(data.index, data.BMP_CMP_WITHIN_YEAR)
+        read_data = pd.read_csv(self.input().path)
+        weeks = read_data.WEEK.max()
+        data = read_data.groupby(['WEEK']).mean()
+        #TODO label axis, set axis, set title, add mean?, add goal
+        GOAL = 0.85
+
+        f, [[ax1, ax2], [ax3, ax4]] = plt.subplots(nrows=2, ncols=2, sharey=True, sharex=True)
+        plt.subplots_adjust(hspace=0.3)
+
+        ax1.set_ylim([.3, 1])
+        ax1.set_xticks(np.arange(1, weeks + 1, 2))
+        ax1.axhline(GOAL, linestyle='--', color='green')
+        ax1.axhline(data.HBA1C_WITHIN_3_MONTHS.mean(), linestyle='-.', color='orange')
+        ax1.set_title('HBA1C within 3 Months')
+        ax1.plot(data.index, data.HBA1C_WITHIN_3_MONTHS)
+
+        # ax2.set_ylim([.3,1])
+        ax2.axhline(GOAL, linestyle='--', color='green')
+        ax2.axhline(data.LIPID_WITHIN_YEAR.mean(), linestyle='-.', color='orange')
+        ax2.set_title('Lipids within year')
+        ax2.plot(data.index, data.LIPID_WITHIN_YEAR)
+
+        # ax3.set_ylim([.3,1])
+        ax3.axhline(GOAL, linestyle='--', color='green')
+        ax3.axhline(data.MICROALBUMIN_WITHIN_YEAR.mean(), linestyle='-.', color='orange')
+        ax3.set_title('Microalbumin within year')
+        ax3.set_xlabel('Week')
+        ax3.plot(data.index, data.MICROALBUMIN_WITHIN_YEAR)
+
+        # ax4.set_ylim([.3,1])
+        ax4.axhline(GOAL, linestyle='--', color='green')
+        ax4.axhline(data.BMP_CMP_WITHIN_YEAR.mean(), linestyle='-.', color='orange')
+        ax4.set_title('Metabolic Panel within year')
+        ax4.set_xlabel('Week')
+        ax4.plot(data.index, data.BMP_CMP_WITHIN_YEAR)
+
+        plt.suptitle('Percentage of Patients with Labs')
+
         d = self.input().path.split('DATA_')[-1].rstrip('.csv')
         plt.savefig(self.output(date=d).path)
         plt.close()
