@@ -83,30 +83,29 @@ class ProviderPlots(luigi.Task):
 
             ax1.set_ylim([.3, 1])
             ax1.set_xticks(np.arange(1, weeks + 1, 2))
+
             ax1.axhline(GOAL, linestyle='--', color='green')
             ax1.axhline(data.HBA1C_WITHIN_3_MONTHS.mean(), linestyle='-.', color='orange')
             ax1.set_title('HBA1C within 3 Months')
             ax1.plot(data.index, data.HBA1C_WITHIN_3_MONTHS)
 
-            # ax2.set_ylim([.3,1])
             ax2.axhline(GOAL, linestyle='--', color='green')
             ax2.axhline(data.LIPID_WITHIN_YEAR.mean(), linestyle='-.', color='orange')
             ax2.set_title('Lipids within year')
             ax2.plot(data.index, data.LIPID_WITHIN_YEAR)
 
-            # ax3.set_ylim([.3,1])
             ax3.axhline(GOAL, linestyle='--', color='green')
             ax3.axhline(data.MICROALBUMIN_WITHIN_YEAR.mean(), linestyle='-.', color='orange')
             ax3.set_title('Microalbumin within year')
             ax3.set_xlabel('Week')
             ax3.plot(data.index, data.MICROALBUMIN_WITHIN_YEAR)
 
-            # ax4.set_ylim([.3,1])
             ax4.axhline(GOAL, linestyle='--', color='green')
             ax4.axhline(data.BMP_CMP_WITHIN_YEAR.mean(), linestyle='-.', color='orange')
             ax4.set_title('Metabolic Panel within year')
             ax4.set_xlabel('Week')
             ax4.plot(data.index, data.BMP_CMP_WITHIN_YEAR)
+
 
             plt.suptitle('Percentage of Patients with Labs')
 
@@ -146,12 +145,21 @@ class ClinicPlots(luigi.Task):
         ax1.axhline(data.HBA1C_WITHIN_3_MONTHS.mean(), linestyle='-.', color='orange')
         ax1.set_title('HBA1C within 3 Months')
         ax1.plot(data.index, data.HBA1C_WITHIN_3_MONTHS)
+        # annotation of plots
+        ax1.annotate('Protocol A \nImplemented', xy=(3, data.HBA1C_WITHIN_3_MONTHS[data.index == 3]), \
+                     xytext=(3, data.HBA1C_WITHIN_3_MONTHS[data.index == 3] + 0.2), \
+                     arrowprops=dict(facecolor='black', shrink=0.2, width=3, \
+                                     headwidth=7))
 
         # ax2.set_ylim([.3,1])
         ax2.axhline(GOAL, linestyle='--', color='green')
         ax2.axhline(data.LIPID_WITHIN_YEAR.mean(), linestyle='-.', color='orange')
         ax2.set_title('Lipids within year')
         ax2.plot(data.index, data.LIPID_WITHIN_YEAR)
+        ax2.annotate('Protocol A \nImplemented', xy=(3, data.LIPID_WITHIN_YEAR[data.index == 3]), \
+                     xytext=(3, data.LIPID_WITHIN_YEAR[data.index == 3] + 0.2), \
+                     arrowprops=dict(facecolor='black', shrink=0.2, width=3, \
+                                     headwidth=7))
 
         # ax3.set_ylim([.3,1])
         ax3.axhline(GOAL, linestyle='--', color='green')
@@ -159,6 +167,10 @@ class ClinicPlots(luigi.Task):
         ax3.set_title('Microalbumin within year')
         ax3.set_xlabel('Week')
         ax3.plot(data.index, data.MICROALBUMIN_WITHIN_YEAR)
+        ax3.annotate('Protocol A \nImplemented', xy=(3, data.MICROALBUMIN_WITHIN_YEAR[data.index == 3]), \
+                     xytext=(3, data.MICROALBUMIN_WITHIN_YEAR[data.index == 3] + 0.2), \
+                     arrowprops=dict(facecolor='black', shrink=0.2, width=3, \
+                                     headwidth=7))
 
         # ax4.set_ylim([.3,1])
         ax4.axhline(GOAL, linestyle='--', color='green')
@@ -166,6 +178,10 @@ class ClinicPlots(luigi.Task):
         ax4.set_title('Metabolic Panel within year')
         ax4.set_xlabel('Week')
         ax4.plot(data.index, data.BMP_CMP_WITHIN_YEAR)
+        ax4.annotate('Protocol A \nImplemented', xy=(3, data.BMP_CMP_WITHIN_YEAR[data.index == 3]), \
+                     xytext=(3, data.BMP_CMP_WITHIN_YEAR[data.index == 3] - 0.4), \
+                     arrowprops=dict(facecolor='black', shrink=0.2, width=3, \
+                                     headwidth=7))
 
         plt.suptitle('Percentage of Patients with Labs')
 
