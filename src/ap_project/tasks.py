@@ -18,7 +18,7 @@ class ReadData(luigi.ExternalTask):
 
 # output clinical data file
 class ClinicData(luigi.Task):
-    ROOT = './data/CLINIC/'
+    ROOT = luigi.Parameter(join('.','data','CLINIC'))
     file = luigi.Parameter('file')
 
     # create master file
@@ -31,10 +31,11 @@ class ClinicData(luigi.Task):
         month_data = pd.read_csv(join('./data/', self.file), parse_dates=['VISIT_DATE'])
         month_data = month_data.fillna('0')
         month_data['WEEK'] = month_data.VISIT_DATE.dt.week
-        clinic_data_path = glob('./data/CLINIC/*')
+        clinic_data_path = glob(join('.','data','CLINIC','*'))
         clinic_data = pd.read_csv(clinic_data_path[0])
         clinic_data = pd.concat([clinic_data, month_data], axis=0, sort=False, ignore_index=True)
-        shutil.move(clinic_data_path[0], './data/old_data')
+        if self.ROOT == join('.','data','CLINIC'):
+            shutil.move(clinic_data_path[0], './data/old_data')
         clinic_data.to_csv(self.output().path)
 
 
@@ -133,7 +134,7 @@ class ClinicPlots(luigi.Task):
         read_data = pd.read_csv(self.input().path)
         weeks = read_data.WEEK.max()
         data = read_data.groupby(['WEEK']).mean()
-        #TODO label axis, set axis, set title, add mean?, add goal
+
         GOAL = 0.85
 
         f, [[ax1, ax2], [ax3, ax4]] = plt.subplots(nrows=2, ncols=2, sharey=True, sharex=True)
